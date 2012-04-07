@@ -1,0 +1,83 @@
+diff -Naur src.old/e_mod_main.c src/e_mod_main.c
+--- src.old/e_mod_main.c	2011-10-29 09:20:45.000000000 +0800
++++ src/e_mod_main.c	2011-10-29 09:48:03.000000000 +0800
+@@ -666,12 +666,16 @@
+ 
+    Ngi_Item *it = ng->item_active;
+ 
+-   if (ev->buttons == 2)
++   // Remove this. Can be accessed by
++   // (i) Settings -> Extensions,  (ii) Everything, (iii) Right click @ bar
++   // Instead bind middle mouse button to comp-scale, same class windows
++   /*if (ev->buttons == 2)
+      {
+         ngi_configure_module(ng->cfg);
+         return EINA_TRUE;
+      }
+-   else if (ng->item_active && ev->buttons == 1)
++   else*/
++   if (ng->item_active && ev->buttons == 1)
+      {
+         it->drag.x = ev->root.x;
+         it->drag.y = ev->root.y;
+diff -Naur src.old/ng_taskbar.c src/ng_taskbar.c
+--- src.old/ng_taskbar.c	2011-09-02 17:47:13.000000000 +0800
++++ src/ng_taskbar.c	2011-10-29 09:48:43.000000000 +0800
+@@ -633,7 +633,7 @@
+ _item_set_label(Ngi_Item_Taskbar *it)
+ {
+    const char *title;
+-   unsigned int max_len = 36;
++   unsigned int max_len = 25;
+ 
+    title = e_border_name_get(it->border);
+ 
+@@ -705,7 +705,7 @@
+           } /* switch */
+         ngi_border_menu_show(item->box, it->border, x, y, dir, ev->timestamp);
+      }
+-   else if (ev->buttons == 1 && ev->double_click && !it->border->iconic)
++   else if (ev->buttons == 1 && !ev->double_click && bd->focused)
+      {
+         e_border_iconify(it->border);
+      }
+@@ -732,7 +732,17 @@
+ 	ngi_bar_lock(item->box->ng, 0);
+      }
+ 
+-   if (ev->buttons != 1)
++   if (ev->buttons == 2 && (bd) && (bd->client.icccm.class))
++     {
++        char buf[1024];
++        E_Action *act = e_action_find("scale-windows");
++        if (!act) return;
++          
++        snprintf(buf, 1024, "go_scale_class:%s", bd->client.icccm.class);
++        act->func.go(NULL, buf);
++        return;
++     }
++   else if (ev->buttons != 1)
+      return;
+ 
+    if (bd->shaded)
+@@ -757,19 +767,7 @@
+      {
+ 	e_border_raise(bd);
+      }
+-   if (bd->focused)
+-     {
+-	char buf[1024];
+-	E_Action *act = e_action_find("scale-windows");
+-
+-	if (!act) return;
+-	if (!bd->client.icccm.class) return;
+-	  
+-	snprintf(buf, 1024, "go_scale_class:%s", bd->client.icccm.class);
+-	act->func.go(NULL, buf);
+-     }
+-   else
+-     e_border_focus_set(bd, 1, 1);
++   e_border_focus_set(bd, 1, 1);
+ }
+ 
+ 

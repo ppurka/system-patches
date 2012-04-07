@@ -1,0 +1,38 @@
+diff -Naur src/e_mod_config.c src.new/e_mod_config.c
+--- src/e_mod_config.c	2010-08-24 14:44:06.000000000 +0800
++++ src.new/e_mod_config.c	2011-08-02 00:38:04.000000000 +0800
+@@ -105,7 +105,7 @@
+ 	inst = l->data;
+ 	if (inst->ci != ci) continue;
+ 	if (!inst->timer)
+-	  inst->timer = ecore_timer_add(0.5, _net_cb_poll, inst);
++	  inst->timer = ecore_timer_add(2.0, _net_cb_poll, inst);
+ 	if (!ci->show_text)
+ 	  edje_object_signal_emit(inst->o_net, "e,state,text,hide", "e");
+ 	else
+diff -Naur src/e_mod_gadcon.c src.new/e_mod_gadcon.c
+--- src/e_mod_gadcon.c	2010-08-05 13:41:03.000000000 +0800
++++ src.new/e_mod_gadcon.c	2011-08-02 00:37:51.000000000 +0800
+@@ -48,7 +48,7 @@
+    gcc = e_gadcon_client_new(gc, name, id, style, inst->o_net);
+    gcc->data = inst;
+    inst->gcc = gcc;
+-   inst->timer = ecore_timer_add(0.5, _net_cb_poll, inst);
++   inst->timer = ecore_timer_add(2.0, _net_cb_poll, inst);
+ 
+    evas_object_event_callback_add(inst->o_net, EVAS_CALLBACK_MOUSE_DOWN, 
+ 				  _net_cb_mouse_down, inst);
+diff -Naur src/e_mod_net.c src.new/e_mod_net.c
+--- src/e_mod_net.c	2011-03-18 22:08:52.000000000 +0800
++++ src.new/e_mod_net.c	2011-08-02 00:36:45.000000000 +0800
+@@ -95,8 +95,8 @@
+ 
+    bin = in - inst->in;
+    bout = out - inst->out;
+-   bin = bin / 0.5;
+-   bout = bout / 0.5;
++   bin = bin / 2;
++   bout = bout / 2;
+    inst->in = in;
+    inst->out = out;
+ 
