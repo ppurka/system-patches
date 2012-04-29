@@ -20,3 +20,7 @@ Patches to system packages
     width of the net module on the shelf so that the text doesn't get cut
     off. Reported this at http://trac.enlightenment.org/e/ticket/955
 
+04. x11-wm/enlightenment/01-fix-notification-store.patch: Patch to change
+    the default value of the storage parameters in notification module.
+    This patch can be removed when this trac bug is fixed:
+    http://trac.enlightenment.org/e/ticket/931

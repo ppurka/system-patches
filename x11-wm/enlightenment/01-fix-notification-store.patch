@@ -1,0 +1,16 @@
+diff -Naur e/src/modules/notification/e_mod_box.c e.new/src/modules/notification/e_mod_box.c
+--- e/src/modules/notification/e_mod_box.c	2012-03-15 22:47:15.000000000 +0800
++++ e.new/src/modules/notification/e_mod_box.c	2012-04-29 19:23:23.000000000 +0800
+@@ -157,9 +157,9 @@
+    ci->show_label = 1;
+    ci->show_popup = 1;
+    ci->focus_window = 1;
+-   ci->store_low = 1;
+-   ci->store_normal = 1;
+-   ci->store_critical = 0;
++   ci->store_low = 0;
++   ci->store_normal = 0;
++   ci->store_critical = 1;
+    notification_cfg->items = eina_list_append(notification_cfg->items, ci);
+ 
+    return ci;
