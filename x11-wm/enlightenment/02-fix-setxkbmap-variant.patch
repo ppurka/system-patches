@@ -1,0 +1,10 @@
+--- e/src/bin/e_xkb.c	2012-04-30 23:51:42.000000000 +0800
++++ e.new/src/bin/e_xkb.c	2012-05-01 12:00:58.000000000 +0800
+@@ -47,7 +47,6 @@
+    EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+      {
+         eina_strbuf_append(buf, cl->variant);
+-        eina_strbuf_append(buf, ",");
+         break;
+      }
+    eina_strbuf_append(buf, "'");
