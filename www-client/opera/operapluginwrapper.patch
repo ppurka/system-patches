@@ -1,0 +1,9 @@
+diff -Naur opera-11.64.1403/lib/opera/operapluginwrapper opera-11.64.1403.new/lib/opera/operapluginwrapper
+--- opera-11.64.1403/lib/opera/operapluginwrapper	2012-05-04 20:55:10.000000000 +0800
++++ opera-11.64.1403.new/lib/opera/operapluginwrapper	2012-05-13 00:15:31.429231923 +0800
+@@ -1,4 +1,5 @@
+ #!/bin/sh
++export LD_PRELOAD=/usr/lib64/libgtk-x11-2.0.so.0
+ #
+ # This script chooses the 32-bit or 64-bit plugin wrapper to use basing on the plugin ELF type.
+ # Based on an idea of My Opera Community members Chewi and kokoko3k.
