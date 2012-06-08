@@ -18,3 +18,6 @@ Patches to system packages
 
 03. www-client/opera/operapluginwrapper.patch: The patch to make flash work
     in opera again.
+
+04. x11-misc/shellementary/shellementary.patch: Patch to get shellementary
+    compile and run again, against new elementary.

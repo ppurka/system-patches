@@ -1,0 +1,76 @@
+diff -Naur shellementary/src/bin/shelm.c shellementary.new/src/bin/shelm.c
+--- shellementary/src/bin/shelm.c	2012-06-02 18:27:03.762398190 +0800
++++ shellementary.new/src/bin/shelm.c	2012-06-03 12:06:04.243528077 +0800
+@@ -179,7 +179,7 @@
+   bindtextdomain(PACKAGE, PACKAGE_LOCALE_DIR);
+   textdomain(PACKAGE);
+   
+-  if (!getenv("SHELM_TOUCHSCREEN")) elm_finger_size_set(1);
++  //if (!getenv("SHELM_TOUCHSCREEN")) elm_finger_size_set(1);
+ 
+   if (!_args_init(argc, argv))
+     {
+diff -Naur shellementary/src/bin/shelm_callbacks.c shellementary.new/src/bin/shelm_callbacks.c
+--- shellementary/src/bin/shelm_callbacks.c	2012-06-02 18:27:03.761398190 +0800
++++ shellementary.new/src/bin/shelm_callbacks.c	2012-06-03 12:11:04.591514943 +0800
+@@ -124,7 +124,7 @@
+    return 0;
+ }
+ 
+-SH_API int _read_stdin_list(void *data, Ecore_Fd_Handler *fd_handler)
++SH_API Eina_Bool _read_stdin_list(void *data, Ecore_Fd_Handler *fd_handler)
+ {
+    char **splitted;
+    char *buffer;
+diff -Naur shellementary/src/bin/shelm.h shellementary.new/src/bin/shelm.h
+--- shellementary/src/bin/shelm.h	2012-06-02 18:27:03.763398190 +0800
++++ shellementary.new/src/bin/shelm.h	2012-06-03 12:06:37.297526631 +0800
+@@ -109,7 +109,7 @@
+ SH_API void            slider_callback(void *data, Evas_Object *obj, void *event_info); // print slider value when clicked OK
+ SH_API void            clock_callback(void *data, Evas_Object *obj, void *event_info); // print clock info
+ SH_API int             _read_stdin_entry(void *data, Ecore_Fd_Handler *fd_handler);
+-SH_API int             _read_stdin_list(void *data, Ecore_Fd_Handler *fd_handler);
++SH_API Eina_Bool       _read_stdin_list(void *data, Ecore_Fd_Handler *fd_handler);
+ 
+ // dialog prototypes
+ void                   shelm_about_dialog(); // when no arguments entered
+diff -Naur shellementary/src/bin/shelm_macros.c shellementary.new/src/bin/shelm_macros.c
+--- shellementary/src/bin/shelm_macros.c	2012-06-02 18:27:03.763398190 +0800
++++ shellementary.new/src/bin/shelm_macros.c	2012-06-03 12:06:04.243528077 +0800
+@@ -63,10 +63,10 @@
+       Evas_Object *icon;
+       icon = elm_icon_add(parent);
+ 
+-      elm_icon_file_set(icon, button_icon, NULL);
++      elm_image_file_set(icon, button_icon, NULL);
+       evas_object_size_hint_aspect_set(icon, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
+       evas_object_show(icon);
+-      elm_object_part_content_set(button, icon);
++      elm_object_part_content_set(button, NULL, icon);
+     }
+ 
+   elm_object_text_set(button, label);
+@@ -139,8 +139,8 @@
+ 
+   icon = elm_icon_add(parent);
+ 
+-  elm_icon_file_set(icon, iconfile, NULL);
+-  elm_icon_resizable_set(icon, 0, 0);
++  elm_image_file_set(icon, iconfile, NULL);
++  elm_image_resizable_set(icon, 0, 0);
+ 
+   return icon;
+ }
+@@ -224,10 +224,10 @@
+       Evas_Object *icon;
+       icon = elm_icon_add(parent);
+ 
+-      elm_icon_file_set(icon, slider_icon, NULL);
++      elm_image_file_set(icon, slider_icon, NULL);
+       evas_object_size_hint_aspect_set(icon, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
+       evas_object_show(icon);
+-      elm_object_part_content_set(slider, icon);
++      elm_object_part_content_set(slider, NULL, icon);
+     }
+   if (slider_vertical) elm_slider_horizontal_set(slider, 0);
+   if (slider_value) elm_slider_value_set(slider, slider_value);
