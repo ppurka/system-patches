@@ -21,3 +21,6 @@ Patches to system packages
 
 04. x11-misc/shellementary/shellementary.patch: Patch to get shellementary
     compile and run again, against new elementary.
+
+05. textext.py.patch: Patch to get textext.py working again, with recent
+    pdf2svg
