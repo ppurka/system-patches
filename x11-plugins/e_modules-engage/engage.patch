@@ -1,7 +1,7 @@
-diff -Naur src.old/e_mod_main.c src/e_mod_main.c
---- src.old/e_mod_main.c	2011-10-29 09:20:45.000000000 +0800
-+++ src/e_mod_main.c	2011-10-29 09:48:03.000000000 +0800
-@@ -666,12 +666,16 @@
+diff -Naur engage/src/e_mod_main.c engage.new/src/e_mod_main.c
+--- engage/src/e_mod_main.c	2012-08-31 00:54:38.000000000 +0800
++++ engage.new/src/e_mod_main.c	2012-09-16 18:15:02.000000000 +0800
+@@ -674,12 +674,16 @@
  
     Ngi_Item *it = ng->item_active;
  
@@ -20,9 +20,9 @@ diff -Naur src.old/e_mod_main.c src/e_mod_main.c
       {
          it->drag.x = ev->root.x;
          it->drag.y = ev->root.y;
-diff -Naur src.old/ng_taskbar.c src/ng_taskbar.c
---- src.old/ng_taskbar.c	2011-09-02 17:47:13.000000000 +0800
-+++ src/ng_taskbar.c	2011-10-29 09:48:43.000000000 +0800
+diff -Naur engage/src/ng_taskbar.c engage.new/src/ng_taskbar.c
+--- engage/src/ng_taskbar.c	2012-08-31 00:54:38.000000000 +0800
++++ engage.new/src/ng_taskbar.c	2012-09-16 18:16:33.000000000 +0800
 @@ -633,7 +633,7 @@
  _item_set_label(Ngi_Item_Taskbar *it)
  {
@@ -32,16 +32,17 @@ diff -Naur src.old/ng_taskbar.c src/ng_taskbar.c
  
     title = e_border_name_get(it->border);
  
-@@ -705,7 +705,7 @@
+@@ -705,7 +705,8 @@
            } /* switch */
          ngi_border_menu_show(item->box, it->border, x, y, dir, ev->timestamp);
       }
 -   else if (ev->buttons == 1 && ev->double_click && !it->border->iconic)
-+   else if (ev->buttons == 1 && !ev->double_click && bd->focused)
++   else if (ev->buttons == 1 && !ev->double_click && bd->focused &&
++            bd->desk == e_desk_current_get(bd->zone))
       {
          e_border_iconify(it->border);
       }
-@@ -732,7 +732,17 @@
+@@ -732,7 +733,17 @@
  	ngi_bar_lock(item->box->ng, 0);
       }
  
@@ -51,7 +52,7 @@ diff -Naur src.old/ng_taskbar.c src/ng_taskbar.c
 +        char buf[1024];
 +        E_Action *act = e_action_find("scale-windows");
 +        if (!act) return;
-+          
++
 +        snprintf(buf, 1024, "go_scale_class:%s", bd->client.icccm.class);
 +        act->func.go(NULL, buf);
 +        return;
@@ -60,7 +61,7 @@ diff -Naur src.old/ng_taskbar.c src/ng_taskbar.c
       return;
  
     if (bd->shaded)
-@@ -757,19 +767,7 @@
+@@ -757,19 +768,7 @@
       {
  	e_border_raise(bd);
       }
