@@ -1,6 +1,15 @@
 diff -Naur engage.old/src/e_mod_main.c engage/src/e_mod_main.c
 --- engage.old/src/e_mod_main.c	2012-10-10 23:56:05.000000000 +0800
-+++ engage/src/e_mod_main.c	2012-10-13 23:46:59.000000000 +0800
++++ engage/src/e_mod_main.c	2012-10-17 22:41:29.000000000 +0800
+@@ -135,7 +135,7 @@
+    data = edje_object_data_get(ng->o_frame, "keep_overlay_pos");
+    if (data) ng->opt.keep_overlay_pos = atof(data);
+ 
+-   ng->opt.fade_duration = 0.25;
++   ng->opt.fade_duration = 0.05;
+ 
+    evas_object_show(ng->o_frame);
+    evas_object_show(ng->o_bg);
 @@ -674,12 +674,16 @@
  
     Ngi_Item *it = ng->item_active;
@@ -41,7 +50,7 @@ diff -Naur engage.old/src/e_mod_main.c engage/src/e_mod_main.c
  	     break;
 diff -Naur engage.old/src/ng_taskbar.c engage/src/ng_taskbar.c
 --- engage.old/src/ng_taskbar.c	2012-10-10 23:56:05.000000000 +0800
-+++ engage/src/ng_taskbar.c	2012-10-13 23:46:20.000000000 +0800
++++ engage/src/ng_taskbar.c	2012-10-17 22:37:02.000000000 +0800
 @@ -633,7 +633,7 @@
  _item_set_label(Ngi_Item_Taskbar *it)
  {
@@ -51,17 +60,18 @@ diff -Naur engage.old/src/ng_taskbar.c engage/src/ng_taskbar.c
  
     title = e_border_name_get(it->border);
  
-@@ -705,7 +705,8 @@
+@@ -705,10 +705,6 @@
            } /* switch */
          ngi_border_menu_show(item->box, it->border, x, y, dir, ev->timestamp);
       }
 -   else if (ev->buttons == 1 && ev->double_click && !it->border->iconic)
-+   else if (ev->buttons == 1 && !ev->double_click && bd->focused &&
-+            bd->desk == e_desk_current_get(bd->zone))
-      {
-         e_border_iconify(it->border);
-      }
-@@ -732,7 +733,17 @@
+-     {
+-        e_border_iconify(it->border);
+-     }
+    else
+       item->mouse_down = 1;
+ }
+@@ -732,7 +728,23 @@
  	ngi_bar_lock(item->box->ng, 0);
       }
  
@@ -76,11 +86,17 @@ diff -Naur engage.old/src/ng_taskbar.c engage/src/ng_taskbar.c
 +        act->func.go(NULL, buf);
 +        return;
 +     }
++   else if (ev->buttons == 1 && !ev->double_click && bd->focused &&
++            bd->desk == e_desk_current_get(bd->zone))
++     {
++        e_border_iconify(bd);
++        return;
++     }
 +   else if (ev->buttons != 1)
       return;
  
     if (bd->shaded)
-@@ -757,19 +768,7 @@
+@@ -757,19 +769,7 @@
       {
  	e_border_raise(bd);
       }
