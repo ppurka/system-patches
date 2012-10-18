@@ -29,16 +29,6 @@ diff -Naur engage.old/src/e_mod_main.c engage/src/e_mod_main.c
       {
          it->drag.x = ev->root.x;
          it->drag.y = ev->root.y;
-@@ -898,7 +902,8 @@
- static void
- _ngi_item_disappear(Ng *ng, Ngi_Item *it)
- {
--   it->scale = 1.0 - (ecore_time_get() - it->start_time) / ng->opt.fade_duration;
-+   //it->scale = 1.0 - (ecore_time_get() - it->start_time) / ng->opt.fade_duration;
-+   it->scale = 0.0; // set to 0.0 otherwise window close takes time
- 
-    if (it->scale > 0.0)
-      {
 @@ -1670,7 +1675,7 @@
     // will be rolled into e17 core and this won't be needed
     EINA_LIST_FOREACH(e_config->modules, l, em)
