@@ -1,6 +1,6 @@
-diff -Naur engage.old/src/e_mod_main.c engage/src/e_mod_main.c
---- engage.old/src/e_mod_main.c	2012-10-10 23:56:05.000000000 +0800
-+++ engage/src/e_mod_main.c	2012-10-17 22:41:29.000000000 +0800
+diff -Naur e_modules-engage.old/src/e_mod_main.c e_modules-engage/src/e_mod_main.c
+--- e_modules-engage.old/src/e_mod_main.c	2013-04-13 22:46:35.385933608 +0800
++++ e_modules-engage/src/e_mod_main.c	2013-04-13 22:49:06.042929762 +0800
 @@ -135,7 +135,7 @@
     data = edje_object_data_get(ng->o_frame, "keep_overlay_pos");
     if (data) ng->opt.keep_overlay_pos = atof(data);
@@ -29,7 +29,7 @@ diff -Naur engage.old/src/e_mod_main.c engage/src/e_mod_main.c
       {
          it->drag.x = ev->root.x;
          it->drag.y = ev->root.y;
-@@ -1670,7 +1675,7 @@
+@@ -1670,7 +1674,7 @@
     // will be rolled into e17 core and this won't be needed
     EINA_LIST_FOREACH(e_config->modules, l, em)
       {
@@ -38,9 +38,9 @@ diff -Naur engage.old/src/e_mod_main.c engage/src/e_mod_main.c
  	  {
  	     have_comp = 1;
  	     break;
-diff -Naur engage.old/src/ng_taskbar.c engage/src/ng_taskbar.c
---- engage.old/src/ng_taskbar.c	2012-10-10 23:56:05.000000000 +0800
-+++ engage/src/ng_taskbar.c	2012-10-17 22:37:02.000000000 +0800
+diff -Naur e_modules-engage.old/src/ng_taskbar.c e_modules-engage/src/ng_taskbar.c
+--- e_modules-engage.old/src/ng_taskbar.c	2013-04-13 22:46:35.387933608 +0800
++++ e_modules-engage/src/ng_taskbar.c	2013-04-13 22:49:24.287929296 +0800
 @@ -633,7 +633,7 @@
  _item_set_label(Ngi_Item_Taskbar *it)
  {
@@ -86,7 +86,7 @@ diff -Naur engage.old/src/ng_taskbar.c engage/src/ng_taskbar.c
       return;
  
     if (bd->shaded)
-@@ -757,19 +769,7 @@
+@@ -757,29 +769,7 @@
       {
  	e_border_raise(bd);
       }
@@ -94,10 +94,20 @@ diff -Naur engage.old/src/ng_taskbar.c engage/src/ng_taskbar.c
 -     {
 -	char buf[1024];
 -	E_Action *act = e_action_find("scale-windows");
+-        Eina_List *l;
+-        Ngi_Item_Taskbar *l_it;
+-        int cnt = 0;
 -
 -	if (!act) return;
--	if (!bd->client.icccm.class) return;
--	  
+-	if (!it->class) return;
+-
+-        EINA_LIST_FOREACH(it->base.box->items, l, l_it)
+-          if (l_it->class == it->class)
+-            cnt++;
+-
+-        if (cnt < 2)
+-          return;
+-
 -	snprintf(buf, 1024, "go_scale_class:%s", bd->client.icccm.class);
 -	act->func.go(NULL, buf);
 -     }

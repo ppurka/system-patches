@@ -1,0 +1,11 @@
+--- terminology-0.2.0/src/bin/termptyesc.c      2012-12-15 14:26:32.000000000 +1100
++++ terminology-0.2.0-patched/src/bin/termptyesc.c      2012-12-23 01:43:11.289030395 +1100
+@@ -16,7 +16,7 @@
+ #define ERR(...)      EINA_LOG_DOM_ERR(_termpty_log_dom, __VA_ARGS__)
+ #define WRN(...)      EINA_LOG_DOM_WARN(_termpty_log_dom, __VA_ARGS__)
+ #define INF(...)      EINA_LOG_DOM_INFO(_termpty_log_dom, __VA_ARGS__)
+-#define DBG(...)      EINA_LOG_DOM_ERR(_termpty_log_dom, __VA_ARGS__)
++#define DBG(...)      EINA_LOG_DOM_DBG(_termpty_log_dom, __VA_ARGS__)
+ 
+ #define ST 0x9c // String Terminator
+ #define BEL 0x07 // Bell
