@@ -1,0 +1,15 @@
+--- a/src/modules/systray/e_mod_main.c.old	2013-01-30 21:23:36.000000000 +0800
++++ b/src/modules/systray/e_mod_main.c	2013-09-21 08:46:09.869893241 +0800
+@@ -493,9 +493,9 @@
+    unsigned short r, g, b;
+    const char *color;
+ 
+-   if (inst->gcc->gadcon->shelf && (!e_util_strcmp(inst->gcc->gadcon->shelf->style, "invisible")))
+-     e_util_dialog_internal (_("Systray Error"),
+-       _("Systray cannot set its background invisible to match its shelf."));
++   //if (inst->gcc->gadcon->shelf && (!e_util_strcmp(inst->gcc->gadcon->shelf->style, "invisible")))
++   //  e_util_dialog_internal (_("Systray Error"),
++   //    _("Systray cannot set its background invisible to match its shelf."));
+    color = edje_object_data_get(inst->ui.gadget, inst->gcc->style);
+    if (!color)
+      color = edje_object_data_get(inst->ui.gadget, "default");
