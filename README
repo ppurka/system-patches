@@ -22,5 +22,8 @@ Patches to system packages
 04. ./x11-wm/enlightenment/02-systray_patch.patch: Patch to stop systray
     from complaining when it is present in a transparent shelf.
 
-05. textext.py.patch: Patch to get textext.py working again, with recent
+05. ./x11-wm/enlightenment/04-backlight.patch: Patch to stop e from
+    resetting backlight on dpms resume
+
+06. textext.py.patch: Patch to get textext.py working again, with recent
     pdf2svg

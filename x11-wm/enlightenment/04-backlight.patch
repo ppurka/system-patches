@@ -1,0 +1,57 @@
+diff -Naur enlightenment-0.17.6/src/modules/backlight/e_mod_main.c enlightenment-0.17.6.new/src/modules/backlight/e_mod_main.c
+--- enlightenment-0.17.6/src/modules/backlight/e_mod_main.c	2013-07-30 01:12:34.000000000 +0800
++++ enlightenment-0.17.6.new/src/modules/backlight/e_mod_main.c	2014-04-14 08:43:44.238674507 +0800
+@@ -114,6 +114,8 @@
+         inst->val = v;
+         e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
+         e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
++        e_config->backlight.normal = v;
++        e_config_save_queue();
+         _backlight_gadget_update(inst);
+      }
+    else if ((!strcmp(keysym, "Down")) ||
+@@ -131,6 +133,8 @@
+         inst->val = v;
+         e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
+         e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
++        e_config->backlight.normal = v;
++        e_config_save_queue();
+         _backlight_gadget_update(inst);
+      }
+    else if ((!strcmp(keysym, "0")) ||
+@@ -149,6 +153,8 @@
+         inst->val = v;
+         e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
+         e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
++        e_config->backlight.normal = v;
++        e_config_save_queue();
+         _backlight_gadget_update(inst);
+      }
+    else
+@@ -225,6 +231,8 @@
+    Instance *inst = data;
+    e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
+    e_backlight_level_set(inst->gcc->gadcon->zone, inst->val, 0.0);
++   e_config->backlight.normal = inst->val;
++   e_config_save_queue();
+ }
+ 
+ static void
+@@ -326,6 +334,8 @@
+    double v = inst->val - 0.1;
+    if (v < 0.0) v = 0.0;
+    e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
++   e_config->backlight.normal = v;
++   e_config_save_queue();
+ }
+ 
+ static void
+@@ -334,6 +344,8 @@
+    double v = inst->val + 0.1;
+    if (v > 1.0) v = 1.0;
+    e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
++   e_config->backlight.normal = v;
++   e_config_save_queue();
+ }
+ 
+ static void
