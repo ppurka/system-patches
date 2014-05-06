@@ -1,0 +1,42 @@
+diff --git a/src/module/e_mod_main.c b/src/module/e_mod_main.c
+index 6f2ad75..369ecb6 100644
+--- a/src/module/e_mod_main.c
++++ b/src/module/e_mod_main.c
+@@ -457,12 +457,28 @@ _mouse_down_cb(void *data, Evas *evas EINA_UNUSED,
+         if (!inst->popup)
+           _popup_new(inst);
+      }
++   else if (ev->button == 2)
++     {
++        _volume_mute_cb(NULL, NULL);
++     }
+    else if (ev->button == 3)
+      {
+         _menu_new(inst, ev);
+      }
+ }
+ 
++static void
++_mouse_wheel_cb(void *data EINA_UNUSED, Evas *evas EINA_UNUSED,
++                Evas_Object *obj EINA_UNUSED, void *event)
++{
++   Evas_Event_Mouse_Wheel *ev = event;
++
++   if (ev->z > 0)
++     _volume_decrease_cb(NULL, NULL);
++   else if (ev->z < 0)
++     _volume_increase_cb(NULL, NULL);
++}
++
+ /*
+  * Gadcon functions
+  */
+@@ -484,6 +500,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
+ 
+    evas_object_event_callback_add(inst->gadget, EVAS_CALLBACK_MOUSE_DOWN,
+                                   _mouse_down_cb, inst);
++   evas_object_event_callback_add(inst->gadget, EVAS_CALLBACK_MOUSE_WHEEL,
++                                  _mouse_wheel_cb, inst);
+    mixer_context->instances = eina_list_append(mixer_context->instances, inst);
+ 
+    return gcc;
