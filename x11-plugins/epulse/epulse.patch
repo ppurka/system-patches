@@ -1,0 +1,61 @@
+diff --git a/src/module/e_mod_main.c b/src/module/e_mod_main.c
+index 0935050..6cf496e 100644
+--- a/src/module/e_mod_main.c
++++ b/src/module/e_mod_main.c
+@@ -161,6 +161,7 @@ static void
+ _volume_increase_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
+ {
+    Sink *s = mixer_context->sink_default;
++   if (!s) return;
+    pa_cvolume v = s->volume;
+    pa_cvolume_inc(&v, VOLUME_STEP);
+ 
+@@ -171,6 +172,7 @@ static void
+ _volume_decrease_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
+ {
+    Sink *s = mixer_context->sink_default;
++   if (!s) return;
+    pa_cvolume v = s->volume;
+    pa_cvolume_dec(&v, VOLUME_STEP);
+ 
+@@ -181,6 +183,7 @@ static void
+ _volume_mute_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
+ {
+    Sink *s = mixer_context->sink_default;
++   if (!s) return;
+    int mute = !s->mute;
+    if (!epulse_sink_mute_set(s->index, mute))
+      {
+@@ -302,6 +305,7 @@ _check_changed_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+                   void *event EINA_UNUSED)
+ {
+    Sink *s = mixer_context->sink_default;
++   if (!s) return;
+    s->mute = !s->mute;
+    if (!epulse_sink_mute_set(s->index, s->mute))
+      {
+@@ -320,6 +324,7 @@ _slider_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
+    int val;
+    pa_volume_t v;
+    Sink *s = mixer_context->sink_default;
++   if (!s) return;
+ 
+    val = (int)e_slider_value_get(obj);
+    v = INT_TO_PA_VOLUME(val);
+@@ -351,6 +356,7 @@ static void
+ _sink_selected_cb(void *data)
+ {
+    Sink *s = data;
++   if (!s) return;
+ 
+    mixer_context->sink_default = s;
+    _mixer_gadget_update();
+@@ -359,6 +365,8 @@ _sink_selected_cb(void *data)
+ static void
+ _popup_new(Instance *inst)
+ {
++   if (!(mixer_context->sink_default)) return;
++
+    Evas_Object *button, *list;
+    Evas *evas;
+    Evas_Coord mw, mh;
